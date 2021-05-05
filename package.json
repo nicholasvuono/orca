@@ -1,25 +1,11 @@
 {
-  "name": "orca",
-  "version": "1.0.0",
-  "description": "a modern performance testing toolkit, using JavaScript ",
+  "name": "@wosp-io/orca",
+  "version": "0.0.1",
+  "description": "a modern performance testing toolkit, using JavaScript",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/wosp-io/orca.git"
-  },
-  "author": "Nicholas Vuono @ wosp (a.k.a We Open Source Performance)",
+  "repository": "https://github.com/wosp-io/orca.git",
+  "author": "nicholasvuono <nicholas.vuono@gmail.com>",
   "license": "Apache-2.0",
-  "bugs": {
-    "url": "https://github.com/wosp-io/orca/issues"
-  },
-  "homepage": "https://github.com/wosp-io/orca#readme",
-  "engines": {
-    "node": ">=14.0.0",
-    "npm": ">=6.0.0"
-  },
   "dependencies": {
     "lighthouse": "^7.4.0",
     "playwright": "^1.10.0",
