@@ -1,0 +1,19 @@
+{
+  "name": "orca",
+  "version": "1.0.0",
+  "description": "a modern performance testing toolkit, using JavaScript ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wosp-io/orca.git"
+  },
+  "author": "Nicholas Vuono @ wosp (a.k.a We Open Source Performance)",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/wosp-io/orca/issues"
+  },
+  "homepage": "https://github.com/wosp-io/orca#readme"
+}
