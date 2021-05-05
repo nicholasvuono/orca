@@ -1,5 +1,6 @@
 [![npm version](https://img.shields.io/npm/v/@wosp-io/orca.svg?style=flat)](https://www.npmjs.com/package/@wosp-io/orca)
 ![ci](https://github.com/wosp-io/orca/actions/workflows/workflow.yml/badge.svg)
+![security analysis](https://github.com/wosp-io/orca/actions/workflows/codeql-analysis.yml/badge.svg)
 ![](https://david-dm.org/wosp-io/orca.svg)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
 # <img src="assets/logo.PNG" width="400">
