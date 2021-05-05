@@ -15,5 +15,9 @@
   "bugs": {
     "url": "https://github.com/wosp-io/orca/issues"
   },
-  "homepage": "https://github.com/wosp-io/orca#readme"
+  "homepage": "https://github.com/wosp-io/orca#readme",
+  "engines": {
+    "node": ">=14.0.0",
+    "npm": ">=6.0.0"
+  },
 }
