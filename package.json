@@ -9,7 +9,7 @@
   "dependencies": {
     "chrome-launcher": "^0.13.4",
     "lighthouse": "^7.4.0",
-    "playwright": "^1.10.0",
-    "requests": "^0.3.0"
+    "puppeteer": "^9.1.1",
+    "request": "^2.88.2"
   }
 }

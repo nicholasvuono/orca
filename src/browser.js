@@ -1,41 +1,41 @@
-const { chromium } = require("playwright");
+const puppeteer = require("puppeteer");
 const lighthouse = require("lighthouse");
 const chromeLauncher = require("chrome-launcher");
 const util = require("util");
 const constants = require("./constants.js");
+const request = require("request");
 
 class Browser {
   async launch(options) {
-    var browser = await chromium.launch(options);
+    var browser = await puppeteer.launch(options);
     this._browser = browser;
     return browser;
   }
 
   async newPage() {
     var page = await this._browser.newPage();
+    this._page = page;
     return page;
   }
 
   async currentPage() {
-    var pages = await browser.pages();
-    var page;
-    for (let i = 0; i < pages.length && !page; i++) {
-      const isHidden = await pages[i].evaluate(() => document.hidden);
-      if (!isHidden) {
-        page = pages[i];
-      }
-    }
+    var page = await this._browser
+      .targets()
+      [this._browser.targets().length - 1].page();
     this._currentPage = page;
     return page;
   }
 
-  async lighthouse(flags) {
-    var chrome = await chromeLauncher({ chromeFlags: flags });
+  async lighthouse(flags, path) {
+    var chrome = await chromeLauncher.launch({
+      chromeFlags: flags,
+      chromePath: path,
+    });
     var response = await util.promisify(request)(
       `http://localhost:${chrome.port}/json/version`
     );
     var { webSocketDebuggerUrl } = JSON.parse(response.body);
-    var browser = await chromium.connect({
+    var browser = await puppeteer.connect({
       browserWSEndpoint: webSocketDebuggerUrl,
       defaultViewport: null,
     });
@@ -61,28 +61,29 @@ class Browser {
         skipAudits: ["uses-http2"],
       },
     };
-    var { report } = await lighthouse(
+    var { lhr } = await lighthouse(
       this._currentPage.url(),
       options,
       configuration
     );
-    return {
+    var metrics = {
       FirstContentfulPaint: {
-        score: report.audits["first-contentful-paint"].score,
-        value: report.audits["first-contentful-paint"].numericValue,
+        score: lhr.audits["first-contentful-paint"].score,
+        value: lhr.audits["first-contentful-paint"].numericValue,
       },
       TimeToInteractive: {
-        score: report.audits.interactive.score,
-        value: report.audits.interactive.numericValue,
+        score: lhr.audits.interactive.score,
+        value: lhr.audits.interactive.numericValue,
       },
     };
+    this._lighthouse_report_metrics = metrics;
+    return metrics;
   }
 
   async kill() {
     if (this._browser !== undefined) {
-      await this._browser.disconnect();
-    }
-    if (this._chrome !== undefined) {
+      await this._browser.close();
+    } else if (this._chrome !== undefined) {
       await this._chrome.kill();
     }
   }
