@@ -7,6 +7,7 @@
   "author": "nicholasvuono <nicholas.vuono@gmail.com>",
   "license": "Apache-2.0",
   "dependencies": {
+    "chrome-launcher": "^0.13.4",
     "lighthouse": "^7.4.0",
     "playwright": "^1.10.0",
     "requests": "^0.3.0"
