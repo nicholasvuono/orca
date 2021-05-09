@@ -1,6 +1,6 @@
 {
   "name": "@wosp-io/orca",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "a modern performance testing toolkit, using JavaScript",
   "main": "index.js",
   "repository": "https://github.com/wosp-io/orca.git",
