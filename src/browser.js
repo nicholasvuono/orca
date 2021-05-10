@@ -9,13 +9,13 @@ class Browser {
   async launch(options) {
     var browser = await puppeteer.launch(options);
     this._browser = browser;
-    return browser;
+    return this;
   }
 
   async newPage() {
     var page = await this._browser.newPage();
     this._page = page;
-    return page;
+    return this;
   }
 
   async currentPage() {
@@ -23,7 +23,7 @@ class Browser {
       .targets()
       [this._browser.targets().length - 1].page();
     this._currentPage = page;
-    return page;
+    return this;
   }
 
   async lighthouse(flags, path) {
@@ -41,7 +41,7 @@ class Browser {
     });
     this._chrome = chrome;
     this._browser = browser;
-    return { chrome, browser };
+    return this;
   }
 
   async audit() {
@@ -77,7 +77,7 @@ class Browser {
       },
     };
     this._lighthouse_report_metrics = metrics;
-    return metrics;
+    return this;
   }
 
   async kill() {
