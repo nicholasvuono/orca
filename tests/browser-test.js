@@ -19,10 +19,12 @@ async function test2() {
     "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
   );
   await Browser.newPage();
-  await Browser._page.goto("http://wosp.io");
+  await Browser._page.goto("https://github.com/wosp-io/orca");
   await Browser.currentPage();
   await Browser.audit();
+  await Browser.resources();
   console.log(Browser._lighthouse_report_metrics);
+  console.log(Browser._resources);
   Browser.kill();
 }
 

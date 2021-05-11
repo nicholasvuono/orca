@@ -84,7 +84,7 @@ class Browser {
     var resources = [];
     let entries = JSON.parse(
       await this._currentPage.evaluate(() =>
-        JSON.stringify(window.performance.getEntries)
+        JSON.stringify(window.performance.getEntries())
       )
     );
     for (var i = 0; i < entries.length; i++) {
@@ -102,7 +102,11 @@ class Browser {
           );
         });
         var { size, time } = await result;
-        resources.push({ url: entries[i].name, size: size, time: time });
+        resources.push({
+          url: entries[i].name,
+          size: parseInt(size, 10),
+          time: time,
+        });
       }
     }
     this._resources = resources;
