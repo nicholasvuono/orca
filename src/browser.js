@@ -80,6 +80,35 @@ class Browser {
     return this;
   }
 
+  async resources() {
+    var resources = [];
+    let entries = JSON.parse(
+      await this._currentPage.evaluate(() =>
+        JSON.stringify(window.performance.getEntries)
+      )
+    );
+    for (var i = 0; i < entries.length; i++) {
+      if (entries[i].name.includes(".js") || entries[i].name.includes(".css")) {
+        let result = new Promise((resolve, reject) => {
+          request.get(
+            { url: entries[i].name, time: true },
+            (err, res, body) => {
+              if (err) return reject(err);
+              let size = res.headers["content-length"];
+              let time = res.elapsedTime;
+              if (size === undefined) size = 0;
+              return resolve({ size, time });
+            }
+          );
+        });
+        var { size, time } = await result;
+        resources.push({ url: entries[i].name, size: size, time: time });
+      }
+    }
+    this._resources = resources;
+    return this;
+  }
+
   async kill() {
     if (this._browser !== undefined) {
       await this._browser.close();
