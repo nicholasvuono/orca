@@ -53,10 +53,22 @@ async function test3() {
   console.log(Steps._timings);
 }
 
-async function test4() {}
+async function test4() {
+  await Browser.launch({ headless: false });
+  await Browser.newPage();
+  await Browser._page.goto("https://github.com/wosp-io/orca");
+  await (
+    await Browser.currentPage()
+  ).timeElement(
+    ".markdown-body > h1:nth-child(2) > a:nth-child(2) > img:nth-child(1)"
+  );
+  console.log(Browser._element_timings);
+  Browser.kill();
+}
 
 (async () => {
   await test();
   await test2();
   await test3();
+  await test4();
 })();

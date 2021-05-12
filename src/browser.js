@@ -4,6 +4,7 @@ const chromeLauncher = require("chrome-launcher");
 const util = require("util");
 const constants = require("./constants.js");
 const request = require("request");
+const { performance } = require("perf_hooks");
 
 class Browser {
   async launch(options) {
@@ -119,7 +120,7 @@ class Browser {
       let timings = [];
       for (var i = 0; i < loadEvents.length; i++) {
         this._currentPage.setCacheEnabled(false);
-        await this._currentPage.goto(this._currentPage.url, {
+        await this._currentPage.goto(this._currentPage.url(), {
           waitUntil: loadEvents[i],
         });
         let start = performance.now();
@@ -134,13 +135,13 @@ class Browser {
       return {
         selector: selector,
         eventTimings: {
-          load: eventTimings[0],
-          domcontentloaded: eventTimings[1],
-          networkidle0: eventTimings[2],
+          load: timings[0],
+          domcontentloaded: timings[1],
+          networkidle0: timings[2],
         },
       };
     };
-    this._element_timings = eventTimings;
+    this._element_timings = await eventTimings();
     return this;
   }
 
