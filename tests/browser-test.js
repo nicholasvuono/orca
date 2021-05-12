@@ -53,6 +53,8 @@ async function test3() {
   console.log(Steps._timings);
 }
 
+async function test4() {}
+
 (async () => {
   await test();
   await test2();

@@ -113,6 +113,37 @@ class Browser {
     return this;
   }
 
+  async timeElement(selector) {
+    let loadEvents = ["load", "domcontentloaded", "networkidle0"];
+    let eventTimings = async () => {
+      let timings = [];
+      for (var i = 0; i < loadEvents.length; i++) {
+        this._currentPage.setCacheEnabled(false);
+        await this._currentPage.goto(this._currentPage.url, {
+          waitUntil: loadEvents[i],
+        });
+        let start = performance.now();
+        try {
+          await this._currentPage.waitForSelector(selector, { visible: true });
+          let time = (performance.now() - start).toFixed(0);
+          timings.push(time);
+        } catch (error) {
+          console.log(`${selector} not found during ${loadEvents[i]}`);
+        }
+      }
+      return {
+        selector: selector,
+        eventTimings: {
+          load: eventTimings[0],
+          domcontentloaded: eventTimings[1],
+          networkidle0: eventTimings[2],
+        },
+      };
+    };
+    this._element_timings = eventTimings;
+    return this;
+  }
+
   async kill() {
     if (this._browser !== undefined) {
       await this._browser.close();
