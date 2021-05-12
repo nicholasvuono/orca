@@ -126,7 +126,7 @@ class Browser {
         let start = performance.now();
         try {
           await this._currentPage.waitForSelector(selector, { visible: true });
-          let time = (performance.now() - start).toFixed(0);
+          let time = parseInt((performance.now() - start).toFixed(0));
           timings.push(time);
         } catch (error) {
           console.log(`${selector} not found during ${loadEvents[i]}`);
