@@ -7,6 +7,7 @@
   "author": "nicholasvuono <nicholas.vuono@gmail.com>",
   "license": "Apache-2.0",
   "dependencies": {
+    "async": "^3.2.0",
     "chrome-launcher": "^0.13.4",
     "lighthouse": "^7.4.0",
     "puppeteer": "^9.1.1",
