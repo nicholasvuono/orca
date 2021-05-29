@@ -2,7 +2,7 @@ const request = require("request");
 
 class Http {
   constructor() {
-    this._responses = [];
+    this._results = [];
   }
 
   options(options) {
@@ -17,15 +17,17 @@ class Http {
 
   async responses() {
     let responses = [];
-    for (var i = 0; i < this._responses.length; i++) {
-      let resp = await Promise.all(this._responses[i]);
+    for (var i = 0; i < this._results.length; i++) {
+      let resp = await Promise.all(this._results[i]);
       responses.push(resp);
     }
-    return responses;
+    this._responses = responses;
+    return this;
   }
 
   async averageResonseTime() {
-    let responses = await this.responses();
+    await this.responses();
+    let responses = this._responses;
     let responseTimes = [];
     for (var i = 0; i < responses.length; i++) {
       for (var j = 0; j < responses[i].length; j++) {
@@ -56,7 +58,7 @@ class Http {
       });
       results.push(result);
     }
-    this._responses.push(results);
+    this._results.push(results);
   }
 
   async concurrent() {
@@ -73,7 +75,7 @@ class Http {
       });
       results.push(result);
     }
-    this._responses.push(results);
+    this._results.push(results);
   }
 
   async parallel() {

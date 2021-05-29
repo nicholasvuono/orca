@@ -18,12 +18,12 @@ async function test() {
   console.log(Http._requests[0].url);
 
   Http.parallel();
-  let responses = await Http.responses();
   await Http.averageResonseTime();
-  console.log("RESPONSES: " + responses);
+  console.log(Http._responses);
   console.log(
     "RESPONSE COUNT: " +
-      responses.length * responses[responses.length - 1].length
+      Http._responses.length *
+        Http._responses[Http._responses.length - 1].length
   );
   console.log(
     "AVERAGE RESPONSE TIME: " + Math.round(Http._average_response_time) + "ms"
