@@ -93,20 +93,23 @@ class Http {
     this._results.push(results);
   }
 
-  parallel() {
+  async parallel() {
     for (var i = 0; i < this._options.vus; i++) {
       this.concurrent();
     }
   }
 
   async send() {
+    process.stdout.write("RUNNING:\n");
     let end = performance.now() + this._options.duration * 1000;
     while (performance.now() < end) {
       for (var i = 0; i < this._options.ips; i++) {
         this.parallel();
       }
       await new Promise((resolve) => setTimeout(resolve, 1000));
+      process.stdout.write("|");
     }
+    process.stdout.write("\n...COMPLETE");
   }
 }
 
