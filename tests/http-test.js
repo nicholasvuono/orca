@@ -2,22 +2,33 @@ const { Http } = require("../src/http.js");
 
 async function test() {
   Http.options({
-    limit: 3,
+    vus: 2,
+    duration: 2,
+    ips: 2,
   });
 
   Http.requests([
     {
       url: "http://httpbin.org/get",
+      method: "GET",
     },
-    { url: "http://httpbin.org/get" },
     {
-      url: "http://httpbin.org/get",
+      url: "http://httpbin.org/post",
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+      },
+      body: {
+        name: "Test API Guy",
+        email: "testapiguy@email.com",
+      },
     },
   ]);
 
-  console.log(Http._requests[0].url);
+  //console.log(Http._requests[0].url);
 
-  Http.parallel();
+  //Http.parallel();
+  await Http.send();
   await Http.averageResonseTime();
   console.log(Http._responses);
   console.log(

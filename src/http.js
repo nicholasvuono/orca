@@ -1,4 +1,5 @@
 const request = require("request");
+const { performance } = require("perf_hooks");
 
 class Http {
   constructor() {
@@ -49,7 +50,14 @@ class Http {
     for (var i = 0; i <= this._requests.length; i++) {
       let result = await new Promise((resolve, reject) => {
         request(
-          { url: this._requests[i].url, time: true },
+          {
+            url: this._requests[i].url,
+            method: this._requests[i].method,
+            headers: this._requests[i].headers,
+            body: this._requests[i].body,
+            json: true,
+            time: true,
+          },
           (err, res, body) => {
             if (err) return reject(err);
             return resolve(res);
@@ -66,7 +74,14 @@ class Http {
     for (var i = 0; i < this._requests.length; i++) {
       let result = new Promise((resolve, reject) => {
         request(
-          { url: this._requests[i].url, time: true },
+          {
+            url: this._requests[i].url,
+            method: this._requests[i].method,
+            headers: this._requests[i].headers,
+            body: this._requests[i].body,
+            json: true,
+            time: true,
+          },
           (err, res, body) => {
             if (err) return reject(err);
             return resolve(res);
@@ -78,9 +93,19 @@ class Http {
     this._results.push(results);
   }
 
-  async parallel() {
-    for (var i = 0; i < this._options.limit; i++) {
+  parallel() {
+    for (var i = 0; i < this._options.vus; i++) {
       this.concurrent();
+    }
+  }
+
+  async send() {
+    let end = performance.now() + this._options.duration * 1000;
+    while (performance.now() < end) {
+      for (var i = 0; i < this._options.ips; i++) {
+        this.parallel();
+      }
+      await new Promise((resolve) => setTimeout(resolve, 1000));
     }
   }
 }
