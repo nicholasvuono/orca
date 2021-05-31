@@ -3,7 +3,7 @@ const { Http } = require("../src/http.js");
 async function test() {
   Http.options({
     vus: 1,
-    duration: 60,
+    duration: 2,
     ips: 1,
   });
 
@@ -24,21 +24,8 @@ async function test() {
       },
     },
   ]);
-
-  //console.log(Http._requests[0].url);
-
-  //Http.parallel();
   await Http.send();
-  await Http.averageResonseTime();
-  console.log(Http._responses);
-  console.log(
-    "RESPONSE COUNT: " +
-      Http._responses.length *
-        Http._responses[Http._responses.length - 1].length
-  );
-  console.log(
-    "AVERAGE RESPONSE TIME: " + Math.round(Http._average_response_time) + "ms"
-  );
+  await Http.report();
 }
 
 (async () => {
