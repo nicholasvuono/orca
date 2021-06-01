@@ -11,6 +11,40 @@ A Node.js library to 'orca'-strate automated performance testing with a single A
 
 **Install:** `npm i @wosp-io/orca`
 
+### Simplest Working Browser Example
+
+```JavaScript
+const { Browser } = require("../src/browser.js");
+
+(async () => {
+  await Browser.launch({ headless: true });
+  await Browser.newPage();
+  await Browser._page.goto("http://wosp.io");
+  Browser.kill();
+})();
+```
+
+### Simplest Working HTTP Example
+
+```JavaScript
+const { Http } = require("../src/http.js");
+
+(async () => {
+  Http.options({
+    vus: 5,
+    duration: 30,
+    ips: 2,
+  });
+  Http.requests([
+    {
+      url: "http://httpbin.org/get",
+      method: "GET",
+    },
+  ]);
+  await Http.send();
+})();
+```
+
 ### HTTP Load Test Report
 
 <img src="assets/http-report.PNG" width="600">
