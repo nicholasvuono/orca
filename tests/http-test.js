@@ -3,7 +3,7 @@ const { Http } = require("../src/http.js");
 async function test() {
   Http.options({
     vus: 1,
-    duration: 2,
+    duration: 1,
     ips: 1,
   });
 

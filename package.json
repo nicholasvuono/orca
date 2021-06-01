@@ -7,9 +7,10 @@
   "author": "nicholasvuono <nicholas.vuono@gmail.com>",
   "license": "Apache-2.0",
   "dependencies": {
-    "chrome-launcher": "^0.13.4",
-    "lighthouse": "^7.4.0",
-    "puppeteer": "^9.1.1",
+    "chalk": "^4.1.1",
+    "chrome-launcher": "^0.14.0",
+    "lighthouse": "^7.5.0",
+    "puppeteer": "^10.0.0",
     "request": "^2.88.2"
   }
 }

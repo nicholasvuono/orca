@@ -1,5 +1,8 @@
+const chalk = require("chalk");
 const request = require("request");
 const { performance } = require("perf_hooks");
+
+const print = console.log;
 
 class Http {
   constructor() {
@@ -81,7 +84,7 @@ class Http {
   }
 
   async send() {
-    process.stdout.write("RUNNING:");
+    process.stdout.write("\nRUNNING:");
     let end = performance.now() + this._options.duration * 1000;
     while (performance.now() < end) {
       for (var i = 0; i < this._options.ips; i++) {
@@ -90,7 +93,7 @@ class Http {
       await new Promise((resolve) => setTimeout(resolve, 1000));
       process.stdout.write("|");
     }
-    process.stdout.write("...COMPLETE!");
+    process.stdout.write(chalk.greenBright("...COMPLETE!"));
   }
 
   async averageResonseTime() {
@@ -133,20 +136,38 @@ class Http {
     this._response_times = responseTimes;
     await this.averageResonseTime();
     await this.ninetiethPercentileAndOtherMetrics();
-    process.stdout.write(`\n\nvus................: ${this._options.vus}\n`);
-    process.stdout.write(
-      `\niterations.........: ${this._options.ips * this._options.duration}\n`
+    print(chalk.cyanBright(`\n\nvus................: ${this._options.vus}`));
+    print(chalk.cyanBright(`duration...........: ${this._options.duration}s`));
+    print(
+      chalk.cyanBright(
+        `iterations.........: ${this._options.ips * this._options.duration}`
+      )
     );
-    process.stdout.write(
-      `\nhttp_rps...........: ${
-        this._options.ips *
-        this._options.duration *
-        this._options.vus *
-        this._requests.length
-      }\n`
+    print(chalk.cyanBright(`ips................: ${this._options.ips}/s`));
+    print(
+      chalk.cyanBright(
+        `http_rps...........: ${
+          this._options.ips *
+          //this._options.duration *
+          this._options.vus *
+          this._requests.length
+        }/s`
+      )
     );
-    process.stdout.write(
-      `\nresponse_times.....: avg=${this._average_response_time}ms min=${this._minimum_response_time}ms med=${this._median_response_time}ms max=${this._maximum_response_time}ms    p(90)=${this._nintieth_percentile_response_time}ms p(95)=${this._ninety_fifth_percentile_response_time}ms\n\n`
+    print(
+      chalk.cyanBright(
+        `request_count......: ${
+          this._options.ips *
+          this._options.duration *
+          this._options.vus *
+          this._requests.length
+        }`
+      )
+    );
+    print(
+      chalk.cyanBright(
+        `response_times.....: avg=${this._average_response_time}ms min=${this._minimum_response_time}ms med=${this._median_response_time}ms max=${this._maximum_response_time}ms    p(90)=${this._nintieth_percentile_response_time}ms p(95)=${this._ninety_fifth_percentile_response_time}ms\n\n`
+      )
     );
   }
 }
