@@ -2,9 +2,9 @@ const { Http } = require("../src/http.js");
 
 async function test() {
   Http.options({
-    vus: 1,
-    duration: 1,
-    ips: 1,
+    vus: 5,
+    duration: 30,
+    ips: 2,
   });
 
   Http.requests([
