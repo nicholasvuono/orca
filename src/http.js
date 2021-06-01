@@ -94,6 +94,7 @@ class Http {
       process.stdout.write("|");
     }
     process.stdout.write(chalk.greenBright("...COMPLETE!"));
+    await this.report();
   }
 
   async averageResonseTime() {

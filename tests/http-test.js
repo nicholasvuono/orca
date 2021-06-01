@@ -25,7 +25,6 @@ async function test() {
     },
   ]);
   await Http.send();
-  await Http.report();
 }
 
 (async () => {
