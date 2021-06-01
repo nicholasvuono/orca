@@ -11,6 +11,6 @@ A Node.js library to 'orca'-strate automated performance testing with a single A
 
 **Install:** `npm i @wosp-io/orca`
 
-# HTTP Load Test Report
+### HTTP Load Test Report
 
 <img src="assets/http-report.PNG" width="600">
