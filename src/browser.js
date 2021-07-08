@@ -19,14 +19,6 @@ class Browser {
     return this;
   }
 
-  async currentPage() {
-    var page = await this._browser
-      .targets()
-      [this._browser.targets().length - 1].page();
-    this._currentPage = page;
-    return this;
-  }
-
   async lighthouse(flags, path) {
     var chrome = await chromeLauncher.launch({
       chromeFlags: flags,
@@ -62,11 +54,7 @@ class Browser {
         skipAudits: ["uses-http2"],
       },
     };
-    var { lhr } = await lighthouse(
-      this._currentPage.url(),
-      options,
-      configuration
-    );
+    var { lhr } = await lighthouse(this._page.url(), options, configuration);
     var metrics = {
       FirstContentfulPaint: {
         score: lhr.audits["first-contentful-paint"].score,
@@ -84,7 +72,7 @@ class Browser {
   async resources() {
     var resources = [];
     let entries = JSON.parse(
-      await this._currentPage.evaluate(() =>
+      await this._page.evaluate(() =>
         JSON.stringify(window.performance.getEntries())
       )
     );
@@ -119,13 +107,13 @@ class Browser {
     let eventTimings = async () => {
       let timings = [];
       for (var i = 0; i < loadEvents.length; i++) {
-        this._currentPage.setCacheEnabled(false);
-        await this._currentPage.goto(this._currentPage.url(), {
+        this._page.setCacheEnabled(false);
+        await this._page.goto(this._page.url(), {
           waitUntil: loadEvents[i],
         });
         let start = performance.now();
         try {
-          await this._currentPage.waitForSelector(selector, { visible: true });
+          await this._page.waitForSelector(selector, { visible: true });
           let time = parseInt((performance.now() - start).toFixed(0));
           timings.push(time);
         } catch (error) {

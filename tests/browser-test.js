@@ -20,7 +20,6 @@ async function test2() {
   );
   await Browser.newPage();
   await Browser._page.goto("https://github.com/wosp-io/orca");
-  await Browser.currentPage();
   await Browser.audit();
   await Browser.resources();
   console.log(Browser._lighthouse_report_metrics);
@@ -57,9 +56,7 @@ async function test4() {
   await Browser.launch({ headless: false });
   await Browser.newPage();
   await Browser._page.goto("https://github.com/wosp-io/orca");
-  await (
-    await Browser.currentPage()
-  ).timeElement(
+  await Browser.timeElement(
     ".markdown-body > h1:nth-child(2) > a:nth-child(2) > img:nth-child(1)"
   );
   console.log(Browser._element_timings);
