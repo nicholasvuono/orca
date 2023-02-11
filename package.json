@@ -9,7 +9,7 @@
   "dependencies": {
     "chalk": "^4.1.1",
     "chrome-launcher": "^0.14.0",
-    "lighthouse": "^7.5.0",
+    "lighthouse": "^10.0.0",
     "puppeteer": "^10.0.0",
     "request": "^2.88.2"
   }
